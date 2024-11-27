@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "s3" {
   }
 }
 
-resource "aws_s3_bucket_versioning" "versioning_example" {
+resource "aws_s3_bucket_versioning" "versioning" {
   bucket = aws_s3_bucket.s3.id
 
   versioning_configuration {
@@ -19,7 +19,7 @@ resource "aws_s3_bucket_versioning" "versioning_example" {
 
 
 //NOTE: 버킷 소유권 설정
-resource "aws_s3_bucket_ownership_controls" "s3_ownershipt" {
+resource "aws_s3_bucket_ownership_controls" "s3_ownership" {
   bucket = aws_s3_bucket.s3.id
 
   rule {
@@ -37,12 +37,12 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
   restrict_public_buckets = var.public_access_block.restrict_public_buckets
 }
 
-resource "aws_s3_bucket_acl" "example" {
+resource "aws_s3_bucket_acl" "acl" {
   bucket = aws_s3_bucket.s3.id
   acl    = var.acl
 
   depends_on = [
-    aws_s3_bucket_ownership_controls.s3_ownershipt,
+    aws_s3_bucket_ownership_controls.s3_ownership,
     aws_s3_bucket_public_access_block.public_access_block,
   ]
 }
